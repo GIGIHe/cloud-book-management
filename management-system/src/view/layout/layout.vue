@@ -1,6 +1,7 @@
 <template>
     <div class="container">
-<h2>cloud-book后台管理系统</h2>
+<h2>cloud-book后台管理系统 <el-button round @click="logout">退出</el-button>
+</h2> 
 <nav class="side-bar">
 <el-menu
        :router=true
@@ -54,43 +55,58 @@
 
 <script>
 // import userList from './userList';
-    export default {
+export default {
+  methods:{
+    logout(){
+      this.$axios.get('/logout').then(res=>{
+        this.$message({
+          showClose:true,
+          message:'退出登录，请重新登录',
+          type:'warning'
+        })
+        setTimeout(() => {
+          this.$router.push('/')
+        }, 1000);
+      })
     }
+  }
+};
 </script>
 
 <style scoped lang='scss'>
-.container{
-    min-height: 100vh;
-    h2{
-        margin-left: 200px;
-        text-align: center;
-        height: 60px;
-        line-height: 60px;
-        font-weight: 400;
-        border-bottom: 1px solid rgba(216, 234, 240, 0.918)
-    }
-    .side-bar{
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        top: 0;
-        width: 200px;
-        color: #fff;
-        z-index: 998;
-        overflow: hidden;
-        background-color: #545c64;
-        .menu{
-          border-right: 1px;
-        }
-    }
-    .main-content{
+.container {
+  min-height: 100vh;
+  h2 {
     margin-left: 200px;
-    .bread-c{
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    font-weight: 400;
+    border-bottom: 1px solid rgba(216, 234, 240, 0.918);
+   
+  }
+  .side-bar {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    width: 200px;
+    color: #fff;
+    z-index: 998;
+    overflow: hidden;
+    background-color: #545c64;
+    .menu {
+      border-right: 1px;
+    }
+  }
+  .main-content {
+    margin-left: 200px;
+    .bread-c {
       font-size: 14px;
       height: 40px;
       line-height: 40px;
-      margin:0 0 0 20px;
+      margin: 0 0 0 20px;
     }
-    }
+  }
 }
 </style>

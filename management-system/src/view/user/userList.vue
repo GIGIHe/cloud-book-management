@@ -19,17 +19,17 @@
     <el-table-column
       prop="createdTime"
       label="日期"
-      width="180">
+      width="200">
     </el-table-column>
     <el-table-column
       prop="desc"
       label="个性签名"
-      width="300">
+      width="400">
     </el-table-column>
    <el-table-column
-       prop="desc"
+       prop="avatar"
       label="头像"
-      width="120">
+      width="140">
       <template slot-scope="scope">
        <img :src="scope.row.avatar" class="avatar"/>
       </template>
@@ -43,10 +43,18 @@
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index,scope.row._id)">删除</el-button>
+          @click="handleDelete(scope.row._id)">删除</el-button>
       </template>
     </el-table-column>
+
   </el-table>
+  <el-pagination
+    layout="prev, pager, next"
+    :page-size = "2"
+   @current-change='pageChange'
+    :total="count"
+    >
+  </el-pagination>
     </div>
 </template>
 
@@ -55,14 +63,17 @@ export default {
   data() {
     return {
       tableData: [],
+      count:0,
+      page:1
     };
   },
   methods: {
     getData() {
       // console.log('1234567')
-      this.$axios.get("/user").then(res => {
-        if (res.code == 200) {
+      this.$axios.get("/user",{pn:this.page,size:4}).then(res => {
+        if (res.code === 200) {
           this.tableData = res.data;
+          this.count = res.count
           console.log(res.data);
         }
       });
@@ -89,6 +100,10 @@ export default {
     },
     handleEdit(){
       
+    },
+    pageChange(page){
+   this.page=page
+   this.getData()
     }
   },
   created() {

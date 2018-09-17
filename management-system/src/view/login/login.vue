@@ -1,6 +1,10 @@
 <template>
     <div class="container">
-     <h2 class="color">欢迎来到后台管理系统</h2>
+        
+ <h2 class="color">欢迎来到后台管理系统</h2>
+
+        
+    
      <div class="login-box">
          <h3>请登录</h3>
       <el-form label-width="80px">
@@ -8,7 +12,8 @@
               <el-input v-model="formData.username" placeholder="请输入您的用户名"></el-input>
           </el-form-item>
           <el-form-item label="密码" >
-              <el-input v-model="formData.password" placeholder="请输入登录密码" type="password"></el-input>
+              <!-- 注意！！！如果用了封装组件的话，比如element，这个时候使用按键修饰符需要加上.native -->
+              <el-input v-model="formData.password" placeholder="请输入登录密码" type="password"  @keyup.enter.native="handleLogin"></el-input>
           </el-form-item>
           <el-button :loading='isLoading' type="primary" @click="handleLogin" class="btn">登录</el-button>
       </el-form>

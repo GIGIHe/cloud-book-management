@@ -1,9 +1,10 @@
 <template>
     <div>
-        <h3>欢迎您进入cloud-book后台管理系统</h3>
+        <h3>欢迎您进入cloud-book后台管理系统
+        </h3>
        <div class="block">
   <!-- <span class="demonstration">please light your stars!</span> -->
-  <el-rate v-model="value1"></el-rate>
+  
 
   <!-- <span class="demonstration">please again,let us see you !</span> -->
   <el-rate

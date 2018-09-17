@@ -27,7 +27,7 @@ const xhr = {
       instance.post(baseUrl + url, data, config).then(res => {
         if(res.data.code==401) {
          Message.error("请重新登录，正在跳转")
-          router.push("/login")
+          router.push("/")
         }
         resolve(res.data)
         }).catch(err => {

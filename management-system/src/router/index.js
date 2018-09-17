@@ -5,7 +5,8 @@ const components={
   layout:()=>import('@/view/layout/layout'),
   index:()=>import('@/view/layout/index'),
   userList:()=>import('@/view/user/userList'),
-  addUser:()=>import('@/view/user/addUser')
+  addUser:()=>import('@/view/user/addUser'),
+  logout:()=>import('@/view/login/logout')
 }
 Vue.use(Router)
 const router = new Router({
@@ -50,13 +51,19 @@ const router = new Router({
                  title: '添加用户页面'
                },
                component: components.addUser
-             }
+             },
+            //  {
+            //    path:'loginout',
+            //    name:'退出',
+            //    component:components.logout
+            
+            //  }
            ]
         }
       ],  
 })
 router.beforeEach((to, from, next) => {
-  if (to.meta.title) {
+  if (to.meta && to.meta.title) {
     document.title = to.meta.title
   }
   next()
