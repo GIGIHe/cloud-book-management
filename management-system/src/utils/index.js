@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
 import router from "../router/index"
-const baseUrl = '/api/admin/'
+const baseUrl = '/api/admin'
 const instance = axios.create({
   baseUrl,
   timeout: 10000,
@@ -13,7 +13,7 @@ const xhr = {
               // console.log(res)
            if (res.data.code == 401) {
              Message.error("请重新登录，正在跳转")
-             router.push("/login")
+             router.push("/")
            }
                 resolve(res.data);
               
@@ -22,9 +22,9 @@ const xhr = {
       })
     })
   },
-  post(url, data, config) {
+  post(url, data, config,method='post') {
     return new Promise((resolve, reject) => {
-      instance.post(baseUrl + url, data, config).then(res => {
+      instance[method](baseUrl + url, data, config).then(res => {
         if(res.data.code==401) {
          Message.error("请重新登录，正在跳转")
           router.push("/")
@@ -34,6 +34,12 @@ const xhr = {
           reject(err)
       })
     })
+  },
+  put(url,data,config){
+    return this.post(url,data,config,'put')
+  },
+  delete(url,data,config){
+    return this.post(url,data,config,'delete')
   }
 }
 export const $axios = xhr

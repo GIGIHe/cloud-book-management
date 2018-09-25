@@ -1,45 +1,63 @@
 <template>
     <div class="container">
+      <h3>用户列表<i title="添加用户" class="el-icon-circle-plus-outline" @click="addAdmin"></i></h3>
   <el-table
     :data="tableData"
     border
     style="width: 100%" class="t-box">
-    <el-table-column
-      fixed
-      prop="username"
-      label="姓名"
-      width="100"
-      >
-    </el-table-column>
-    <el-table-column
-      prop="nickname"
-      label="昵称"
-      width="120" >
-    </el-table-column>
-    <el-table-column
-      prop="createdTime"
-      label="日期"
-      width="200">
-    </el-table-column>
-    <el-table-column
-      prop="desc"
-      label="个性签名"
-      width="400">
-    </el-table-column>
-   <el-table-column
+     <el-table-column
        prop="avatar"
       label="头像"
-      width="140">
+      width="140"
+      align="center"
+      >
       <template slot-scope="scope">
        <img :src="scope.row.avatar" class="avatar"/>
       </template>
     </el-table-column>
-    <el-table-column label="操作">
+    <el-table-column
+      label="姓名"
+      width="140" align="center"
+      >
       <template slot-scope="scope">
-        <el-button
+      <el-popover trigger="hover" placement="top-start">
+        <p class="tp">{{scope.row.username}}</p>
+          <p>描述: {{ scope.row.desc }}</p>
+          <!-- slot="reference"触发popover中的内容 -->
+           <div slot="reference">
+              <el-tag size="medium">{{ scope.row.username }}</el-tag>
+            </div>
+      </el-popover>
+   
+      </template>
+    </el-table-column>
+    <el-table-column
+      prop="nickname"
+      label="昵称" align="center"
+      width="140" >
+    </el-table-column>
+    <el-table-column
+      prop="createdTime"
+      label="创建日期" align="center"
+      width="200">
+    </el-table-column>
+    <!-- <el-table-column
+      prop="desc"
+      label="个性签名"
+      width="400">
+    </el-table-column> -->
+    <el-table-column
+     prop="email"
+      label="邮箱" align="center"
+      width="200">
+
+    </el-table-column>
+    <el-table-column label="操作" align="center">
+      <template slot-scope="scope">
+        <!-- <el-button
           size="mini"
           type="primary"
-          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          @click="handleDetail(scope.row._id)">查看详情</el-button> -->
         <el-button
           size="mini"
           type="danger"
@@ -79,6 +97,7 @@ export default {
       });
     },
     handleDelete(id) {
+      console.log(id)
       this.$confirm("此操作将永久管理员, 是否继续?", "警告", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -98,12 +117,16 @@ export default {
           });
         });
     },
-    handleEdit(){
-      
+    handleDetail(id){
+      // 模板字符串如果搞错了，得到的ID就不是正确的值
+      this.$router.push(`/layout/managerInfo?id=${id}`)
     },
     pageChange(page){
    this.page=page
    this.getData()
+    },
+    addAdmin(){
+this.$router.push('/layout/addmanager')
     }
   },
   created() {
@@ -114,6 +137,9 @@ export default {
 
 <style scoped lang="scss">
 .container {
+ 
+    padding: 10px 20px;
+
   .avatar {
     width: 70px;
     height: 70px;
@@ -121,6 +147,9 @@ export default {
   }
   .t-box {
     font-size: 12px;
+    .tp{
+      cursor: pointer;
+    }
   }
 }
 </style>
